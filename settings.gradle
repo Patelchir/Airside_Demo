@@ -1,0 +1,2 @@
+rootProject.name='Airside_Demo'
+include ':app'
