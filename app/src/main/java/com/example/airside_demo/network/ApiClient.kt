@@ -8,6 +8,7 @@ import com.google.gson.JsonIOException
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.ResponseBody.Companion.toResponseBody
 import okhttp3.logging.HttpLoggingInterceptor
 import org.json.JSONArray
 import org.json.JSONException
@@ -75,8 +76,8 @@ class ApiClient {
                 if (BuildConfig.DEBUG) {
                     builder.addInterceptor(logging)
                 }
-                builder.readTimeout(60, TimeUnit.SECONDS)
-                    .connectTimeout(60, TimeUnit.SECONDS)
+                builder.readTimeout(30, TimeUnit.SECONDS)
+                    .connectTimeout(30, TimeUnit.SECONDS)
                     .addInterceptor(HttpHandleIntercept())
                     .build()
                 okHttpClient = builder.build()
@@ -89,12 +90,10 @@ class ApiClient {
          * generate custom response for exception
          */
         fun generateCustomResponse(code: Int, message: String, request: Request): Response? {
-            try {
-                val body = ResponseBody.create(
-                    "application/json".toMediaTypeOrNull(),
-                    getJSONObjectForException(message, code).toString()
-                )
-                return Response.Builder()
+            return try {
+                val body = getJSONObjectForException(message, code).toString()
+                    .toResponseBody("application/json".toMediaTypeOrNull())
+                Response.Builder()
                     .code(code)
                     .request(request)
                     .protocol(Protocol.HTTP_1_1)
@@ -103,7 +102,7 @@ class ApiClient {
                     .build()
             } catch (ex: JsonIOException) {
                 DebugLog.print(ex)
-                return null
+                null
             }
 
         }

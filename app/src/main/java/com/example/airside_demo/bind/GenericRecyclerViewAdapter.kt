@@ -8,6 +8,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 import java.util.*
 
+@Suppress("UNCHECKED_CAST")
 abstract class GenericRecyclerViewAdapter<T, D> (
     val context: Context,
     private var mArrayList: ArrayList<T>?
@@ -18,7 +19,11 @@ abstract class GenericRecyclerViewAdapter<T, D> (
 
     abstract fun onBindData(model: T, position: Int, dataBinding: D)
 
-    abstract fun onItemClick(model: T, position: Int)
+    abstract fun onItemClick(
+        model: T,
+        position: Int,
+        mDataBinding: ViewDataBinding
+    )
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val dataBinding = DataBindingUtil.inflate<ViewDataBinding>(
@@ -39,7 +44,7 @@ abstract class GenericRecyclerViewAdapter<T, D> (
         (holder.mDataBinding as ViewDataBinding).root.setOnClickListener {
             onItemClick(
                 mArrayList!!.get(position),
-                position
+                position, holder.mDataBinding as ViewDataBinding
             )
         }
     }
@@ -48,12 +53,6 @@ abstract class GenericRecyclerViewAdapter<T, D> (
         return mArrayList!!.size
     }
 
-    fun addItems(arrayList: ArrayList<T>) {
-        val startSize = mArrayList!!.size
-        mArrayList = arrayList
-                this.notifyDataSetChanged()
-//        this.notifyItemRangeChanged(startSize, arrayList.size)
-    }
 
     fun getItem(position: Int): T {
         return mArrayList!![position]

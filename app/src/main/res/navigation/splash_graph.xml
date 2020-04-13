@@ -5,21 +5,38 @@
     android:id="@+id/splash_graph"
     app:startDestination="@id/homeFragment"
     tools:ignore="UnusedNavigation">
-    <!--
 
-        <include app:graph="@navigation/dashboard_graph" />
-
-    -->
-
-    <!--Splash Fragment Navigation-->
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.example.airside_demo.home.HomeFragment"
         tools:layout="@layout/home_fragment">
         <action
-            android:id="@+id/action_move_to_home"
+            android:id="@+id/action_home_fragment_to_search_detail_fragment"
+            app:destination="@id/searchDetailFragment"
             app:popUpTo="@+id/homeFragment"
-            app:popUpToInclusive="true" />
+           >
+            <argument
+                android:name="imageURL"
+                android:defaultValue="null"
+                app:argType="string" />
+            <argument
+                android:name="title"
+                android:defaultValue="null"
+                app:argType="string" />
+
+        </action>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/searchDetailFragment"
+        android:name="com.example.airside_demo.searchdetail.SearchDetailFragment"
+        tools:layout="@layout/search_detail_fragment">
+
+        <action
+            android:id="@+id/action_search_detail_fragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/homeFragment" />
     </fragment>
 
 

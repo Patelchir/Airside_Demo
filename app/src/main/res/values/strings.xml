@@ -4,4 +4,6 @@
     <string name="msg_no_internet">Make sure that Wi-Fi or Cellular Mobile Data is turned on, then
         try again.
     </string>
+    <string name="search_hint">Please type here…</string>
+    <string name="no_data_found">No Data Found</string>
 </resources>

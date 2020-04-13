@@ -11,16 +11,16 @@ class ErrorWrapper {
     @Expose
     var errors: JsonObject? = null
 
-    @SerializedName("status")
+    @SerializedName("stat")
     @Expose
-    var status: Boolean? = null
+    var status: String? = null
     @SerializedName("message")
     @Expose
     var message: String? = null
     @SerializedName("message_code")
     @Expose
     var message_code: String? = null
-    @SerializedName("status_code")
+    @SerializedName("code")
     @Expose
     var status_code: Int? = null
 

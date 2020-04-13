@@ -14,6 +14,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <include
+            android:id="@+id/layToolbar"
+            layout="@layout/layout_toolbar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/fragment_container_view"
@@ -21,6 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@android:color/white"
+            app:layout_constraintTop_toBottomOf="@id/layToolbar"
             app:defaultNavHost="true"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"

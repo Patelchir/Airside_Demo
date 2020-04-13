@@ -11,15 +11,15 @@ import kotlinx.coroutines.launch
 class HomeViewModel : ViewModelBase() {
     // TODO: Implement the ViewModel
     internal var responseOrgDashboard =
-        MutableLiveData<ResponseHandler<ResponseData<Test>?>>()
+        MutableLiveData<ResponseHandler<ResponseData<HomeResponse>?>>()
     private var homeRepository: HomeRepository? =
         HomeRepository(ApiClient.getApiInterface())
 
-    fun callOrgDashboard(homeRequest: HomeRequest) {
+    fun callSearchAPI(page: Int, query: String?) {
         viewModelScope.launch(coroutineContext) {
             responseOrgDashboard.value = ResponseHandler.Loading
             responseOrgDashboard.value =
-                homeRepository?.callGetProfileAPI()
+                homeRepository?.callGetProfileAPI(page,query)
         }
     }
 }

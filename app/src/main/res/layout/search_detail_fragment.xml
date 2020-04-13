@@ -1,19 +1,24 @@
-<?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.example.airside_demo.searchdetail.SearchDetailViewModel" />
+
+        <import type="android.view.View" />
+
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="7dp">
+        android:layout_height="match_parent">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/imgPhoto"
             android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:adjustViewBounds="true"
-            android:scaleType="center"
+            android:layout_height="match_parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>

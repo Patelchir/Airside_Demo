@@ -22,8 +22,8 @@ class BindAdapters {
                 return
             } else {
                 val requestOptions = RequestOptions()
-                requestOptions.placeholder(R.mipmap.ic_launcher)
-                requestOptions.error(R.mipmap.ic_launcher)
+                requestOptions.placeholder(R.drawable.ic_placeholder_image)
+                requestOptions.error(R.drawable.ic_error_image)
                 requestOptions.dontAnimate()
                 requestOptions.diskCacheStrategy(DiskCacheStrategy.ALL)
                 if ((url.contains("https://") || url.contains("http://"))) {

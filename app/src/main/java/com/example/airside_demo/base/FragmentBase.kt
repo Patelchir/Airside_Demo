@@ -82,7 +82,6 @@ abstract class FragmentBase<V : ViewModelBase, DataBinding : ViewDataBinding> :
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        setupToolbar()
         initializeScreenVariables()
     }
 
@@ -91,10 +90,7 @@ abstract class FragmentBase<V : ViewModelBase, DataBinding : ViewDataBinding> :
         viewModel = getViewModel()
         setUpSnackbar()
         setUpProgressBar()
-//        checkForInAppUpdate()
     }
-
-
 
 
     /**
@@ -146,8 +142,6 @@ abstract class FragmentBase<V : ViewModelBase, DataBinding : ViewDataBinding> :
     private fun getBaseActivity(): AppCompatActivity? {
         return _activity
     }
-
-
 
 
     /**
@@ -221,7 +215,6 @@ abstract class FragmentBase<V : ViewModelBase, DataBinding : ViewDataBinding> :
      */
 
 
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == MY_REQUEST_CODE) {
@@ -238,6 +231,7 @@ abstract class FragmentBase<V : ViewModelBase, DataBinding : ViewDataBinding> :
 // However, you should execute this check at all entry points into the app.
     override fun onResume() {
         super.onResume()
+        setupToolbar()
     }
 
 }

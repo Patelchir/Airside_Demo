@@ -29,7 +29,7 @@ abstract class ActivityBase<V : ViewModelBase> : AppCompatActivity() {
     /**
      * This method is used to hide the keyboard.
      */
-    private fun hideKeyboard() {
+    fun hideKeyboard() {
         val view = this.currentFocus
         if (view != null) {
             val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -87,7 +87,7 @@ abstract class ActivityBase<V : ViewModelBase> : AppCompatActivity() {
 
 
     fun getCurrentFragment(): Fragment? {
-        return null/*supportFragmentManager.findFragmentById(R.id.splash_host)*/
+        return supportFragmentManager.findFragmentById(R.id.fragment_container_view)
     }
 
 
