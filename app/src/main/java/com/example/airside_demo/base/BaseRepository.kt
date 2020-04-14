@@ -31,23 +31,15 @@ open class BaseRepository {
             val response = call.invoke()
             when {
                 response.code() == 200 -> {
-                    return when (response.body()?.statusCode) {
-                        400 -> {
-
-                            ResponseHandler.OnFailed(
-                                response.body()?.statusCode!!,
-                                response.body()?.message!!,
-                                "0"
-                            )
+                    return when (response.body()?.stat) {
+                        "ok" -> {
+                            ResponseHandler.OnSuccessResponse(response.body())
                         }
-                        401 -> {
-                            ResponseHandler.OnFailed(
-                                HttpErrorCode.UNAUTHORIZED.code,
-                                response.body()?.message!!,
-                                response.body()?.statusCode!!.toString()
-                            )
-                        }
-                        else -> ResponseHandler.OnSuccessResponse(response.body())
+                        else -> ResponseHandler.OnFailed(
+                            HttpErrorCode.UNAUTHORIZED.code,
+                            response.body()?.message!!,
+                            response.body()?.statusCode!!.toString()
+                        )
                     }
                 }
                 response.code() == 401 -> {
@@ -55,7 +47,7 @@ open class BaseRepository {
                     val message: String
                     val bodyString = body?.string()
                     val responseWrapper =
-                        Gson().fromJson<ErrorWrapper>(bodyString, ErrorWrapper::class.java)
+                        Gson().fromJson(bodyString, ErrorWrapper::class.java)
                     message = if (responseWrapper?.status_code == 401) {
                         if (responseWrapper.errors != null) {
                             HttpCommonMethod.getErrorMessage(responseWrapper.errors)
@@ -76,7 +68,7 @@ open class BaseRepository {
                     val message: String
                     val bodyString = body?.string()
                     val responseWrapper =
-                        Gson().fromJson<ErrorWrapper>(bodyString, ErrorWrapper::class.java)
+                        Gson().fromJson(bodyString, ErrorWrapper::class.java)
                     message = if (responseWrapper?.status_code == 422) {
                         if (responseWrapper.errors != null) {
                             HttpCommonMethod.getErrorMessage(responseWrapper.errors)
@@ -103,17 +95,17 @@ open class BaseRepository {
                     val body = response.errorBody()
                     val bodyString = body?.string()
                     val responseWrapper =
-                        Gson().fromJson<ErrorWrapper>(bodyString, ErrorWrapper::class.java)
+                        Gson().fromJson(bodyString, ErrorWrapper::class.java)
                     val message = if (responseWrapper?.status_code == 422) {
                         if (responseWrapper.errors != null) {
                             HttpCommonMethod.getErrorMessage(responseWrapper.errors)
                         } else {
-                            responseWrapper?.message.toString()
+                            responseWrapper.message.toString()
                         }
                     } else {
                         responseWrapper?.message.toString()
                     }
-                    return if (message.isNullOrEmpty()) {
+                    return if (message.isEmpty()) {
                         ResponseHandler.OnFailed(
                             HttpErrorCode.EMPTY_RESPONSE.code,
                             message,

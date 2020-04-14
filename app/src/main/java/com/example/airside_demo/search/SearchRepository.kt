@@ -1,4 +1,4 @@
-package com.example.airside_demo.home
+package com.example.airside_demo.search
 
 import com.example.airside_demo.BuildConfig
 import com.example.airside_demo.network.client.ApiInterface
@@ -9,9 +9,9 @@ import com.example.airside_demo.utils.Constant
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class HomeRepository(private val apiInterface: ApiInterface) : BaseRepository() {
+class SearchRepository(private val apiInterface: ApiInterface) : BaseRepository() {
 
-    suspend fun callGetProfileAPI(page: Int, query: String?): ResponseHandler<ResponseData<HomeResponse>?> {
+    suspend fun callGetProfileAPI(page: Int, query: String?): ResponseHandler<ResponseData<SearchResponse>?> {
         return withContext(Dispatchers.Default) {
             return@withContext makeAPICall(
                 call = {

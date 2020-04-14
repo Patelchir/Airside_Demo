@@ -15,7 +15,6 @@ abstract class ResponseWrapper<T> {
     @Expose
     var stat: String? = null
 
-
     @SerializedName("message")
     @Expose
     var message: String? = null

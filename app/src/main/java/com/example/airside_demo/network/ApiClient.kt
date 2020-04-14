@@ -45,7 +45,6 @@ class ApiClient {
             if (myapiInterface != null) {
                 return myapiInterface!!
             }
-            initRetrofit()
             return myapiInterface as ApiInterface
         }
 

@@ -1,6 +1,6 @@
-package com.example.airside_demo.home
+package com.example.airside_demo.search
 
-data class HomeResponse(
+data class SearchResponse(
     val page: Int,
     val pages: Int,
     val perpage: Int,

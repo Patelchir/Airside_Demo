@@ -1,4 +1,4 @@
-package com.example.airside_demo.home
+package com.example.airside_demo.search
 
 import android.annotation.SuppressLint
 import android.view.View
@@ -6,6 +6,7 @@ import android.widget.SearchView
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavDirections
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.airside_demo.MainActivity
@@ -13,16 +14,16 @@ import com.example.airside_demo.R
 import com.example.airside_demo.base.FragmentBase
 import com.example.airside_demo.bind.BindAdapters
 import com.example.airside_demo.bind.GenericRecyclerViewAdapter
-import com.example.airside_demo.databinding.HomeFragmentBinding
 import com.example.airside_demo.databinding.RowHomeBinding
+import com.example.airside_demo.databinding.SearchFragmentBinding
 import com.example.airside_demo.network.client.ResponseHandler
 import com.example.airside_demo.network.model.ResponseData
 
-class HomeFragment : FragmentBase<HomeViewModel, HomeFragmentBinding>(),
+class SearchFragment : FragmentBase<SearchViewModel, SearchFragmentBinding>(),
     SearchView.OnQueryTextListener {
 
-    private lateinit var viewmodel: HomeViewModel
-    private var photoList: ArrayList<HomeResponse.Photo> = ArrayList()
+    private lateinit var viewmodel: SearchViewModel
+    private var photoList: ArrayList<SearchResponse.Photo> = ArrayList()
 
     // Pagination
     private var currentPage = 1
@@ -36,7 +37,7 @@ class HomeFragment : FragmentBase<HomeViewModel, HomeFragmentBinding>(),
 
 
     override fun getLayoutId(): Int {
-        return R.layout.home_fragment
+        return R.layout.search_fragment
     }
 
     override fun setupToolbar() {
@@ -51,13 +52,13 @@ class HomeFragment : FragmentBase<HomeViewModel, HomeFragmentBinding>(),
         setProjects()
     }
 
-    override fun getViewModel(): HomeViewModel? {
-        viewmodel = ViewModelProvider(this).get(HomeViewModel::class.java)
+    override fun getViewModel(): SearchViewModel? {
+        viewmodel = ViewModelProvider(this).get(SearchViewModel::class.java)
         return viewmodel
     }
 
     override fun unAuthorizationUser(message: String?, messageCode: String?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        message?.let { showSnackbar(it) }
     }
 
     override fun onResume() {
@@ -81,7 +82,7 @@ class HomeFragment : FragmentBase<HomeViewModel, HomeFragmentBinding>(),
                     httpFailedHandler(it.code, it.message, it.messageCode)
 
                 }
-                is ResponseHandler.OnSuccessResponse<ResponseData<HomeResponse>?> -> {
+                is ResponseHandler.OnSuccessResponse<ResponseData<SearchResponse>?> -> {
                     viewmodel.showProgressBar(false)
 
 
@@ -114,7 +115,7 @@ class HomeFragment : FragmentBase<HomeViewModel, HomeFragmentBinding>(),
 
     private fun setProjects() {
         val myAdapter = object :
-            GenericRecyclerViewAdapter<HomeResponse.Photo, RowHomeBinding>(
+            GenericRecyclerViewAdapter<SearchResponse.Photo, RowHomeBinding>(
                 context!!,
                 photoList
             ) {
@@ -123,7 +124,7 @@ class HomeFragment : FragmentBase<HomeViewModel, HomeFragmentBinding>(),
 
             @SuppressLint("SetTextI18n")
             override fun onBindData(
-                model: HomeResponse.Photo,
+                model: SearchResponse.Photo,
                 position: Int,
                 dataBinding: RowHomeBinding
             ) {
@@ -138,14 +139,16 @@ class HomeFragment : FragmentBase<HomeViewModel, HomeFragmentBinding>(),
             }
 
             override fun onItemClick(
-                model: HomeResponse.Photo,
+                model: SearchResponse.Photo,
                 position: Int,
                 mDataBinding: ViewDataBinding
             ) {
 
                 (activity as MainActivity).navigateToNextScreenThroughDirections(
-                    HomeFragmentDirections.actionHomeFragmentToSearchDetailFragment()
-                        .setImageURL(model.imageurl).setTitle(model.title)
+                    SearchFragmentDirections.actionSeachFragmentToSearchDetailFragment(
+                        model.imageurl,
+                        model.title
+                    )
                 )
             }
 
@@ -201,3 +204,4 @@ class HomeFragment : FragmentBase<HomeViewModel, HomeFragmentBinding>(),
         return false
     }
 }
+

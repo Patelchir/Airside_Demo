@@ -38,32 +38,6 @@ abstract class ActivityBase<V : ViewModelBase> : AppCompatActivity() {
     }
 
 
-    /*
-     * This method is used for Navigating from One Screen to Next Screen using Navigation
-     * Direction graph.
-     * @param navigationId This is the Id of the Navigation Graph Action
-     */
-    /*fun navigateToNextScreen(navigationId: Int) {
-        try {
-            navHostFragment.findNavController().navigate(navigationId)
-        } catch (e: Exception) {
-            DebugLog.print(e)
-        }
-    }*/
-
-    /*
-     * This method is used for Navigating from One Screen to Next Screen using Navigation
-     * Direction graph.
-     * @param navigationId This is the Id of the Navigation Graph Action
-     */
-    /*fun navigateToNextScreen(navigationId: Int,bundle: Bundle) {
-        try {
-            navHostFragment.findNavController().navigate(navigationId,bundle)
-        } catch (e: Exception) {
-            DebugLog.print(e)
-        }
-    }*/
-
     /**
      * This method is used for Navigating from One Screen to Next Screen using Navigation
      * Direction graph.
@@ -76,6 +50,8 @@ abstract class ActivityBase<V : ViewModelBase> : AppCompatActivity() {
             DebugLog.print(e)
         }
     }
+
+
 
     /**
      * This is the Method to initialize the variable at base level for Navigating from Single Class.

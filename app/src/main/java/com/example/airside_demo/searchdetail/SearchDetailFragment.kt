@@ -26,12 +26,11 @@ class SearchDetailFragment : FragmentBase<SearchDetailViewModel, SearchDetailFra
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        imageURL = arguments?.getString(Constant.INTENT_IMAGE_URL).toString()
-        title = arguments?.getString(Constant.INTENT_IMAGE_TITLE).toString()
+        imageURL = SearchDetailFragmentArgs.fromBundle(arguments!!).imageURL
+        title = SearchDetailFragmentArgs.fromBundle(arguments!!).title
         (activity as MainActivity).toolbar?.setNavigationOnClickListener {
             (activity as MainActivity).onBackPressed()
         }
-        DebugLog.d(imageURL)
     }
 
 

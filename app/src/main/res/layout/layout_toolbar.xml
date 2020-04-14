@@ -27,17 +27,18 @@
                 android:id="@+id/search_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:queryHint="@string/search_hint" />
+                android:queryHint="@string/search_hint"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/toolbarTitle"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_marginEnd="@dimen/_55sdp"
                 android:gravity="center"
                 android:letterSpacing="0.02"
                 android:maxLines="1"
-                android:textColor="@android:color/black"
+                android:textColor="@color/colorAccent"
                 android:textSize="@dimen/dimen_title"
                 android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -53,7 +54,4 @@
             android:background="@color/colorPrimary" />
     </FrameLayout>
 
-</com.google.android.material.appbar.AppBarLayout><!--
-    app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-    app:titleTextAppearance="@style/txtToolbarTitleStyle_black"
--->
+</com.google.android.material.appbar.AppBarLayout>

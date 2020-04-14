@@ -6,7 +6,7 @@
 
         <variable
             name="viewModel"
-            type="com.example.airside_demo.home.HomeViewModel" />
+            type="com.example.airside_demo.search.SearchViewModel" />
 
         <import type="android.view.View" />
 
