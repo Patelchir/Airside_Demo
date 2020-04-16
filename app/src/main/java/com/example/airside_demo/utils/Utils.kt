@@ -3,29 +3,16 @@ package com.example.airside_demo.utils
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
-import android.content.Intent
-import android.content.pm.PackageManager
 import android.graphics.Color
-import android.graphics.Rect
 import android.graphics.drawable.ColorDrawable
-import android.net.Uri
-import android.util.TypedValue
+import android.graphics.drawable.Drawable
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.DynamicDrawableSpan.ALIGN_CENTER
+import android.text.style.ImageSpan
+import android.view.Gravity
 import android.view.LayoutInflater
-import android.view.TouchDelegate
-import android.view.View
-import android.widget.ImageView
-import android.widget.TextView
 import com.example.airside_demo.R
-import com.example.airside_demo.network.model.ListOfJson
-import com.google.gson.Gson
-import org.json.JSONArray
-import java.io.IOException
-import java.io.InputStream
-import java.net.URLEncoder
-import java.text.ParseException
-import java.text.SimpleDateFormat
-import java.util.*
-import kotlin.collections.ArrayList
 
 
 object Utils {
@@ -42,7 +29,6 @@ object Utils {
         dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         return dialog
     }
-
 
     /**
      * Remove [] from Error Objects when there are multiple errors

@@ -48,6 +48,8 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     def dependancies = rootProject.ext.presentationDependencies
 
+
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation dependancies.appcompat
     implementation dependancies.kotlin
     implementation dependancies.kotlinCore
@@ -60,8 +62,8 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
-    implementation 'com.intuit.sdp:sdp-android:1.0.6'
     kapt dependancies.databindingCompiler
+    implementation dependancies.sdp
     implementation dependancies.constrainLayout
     implementation dependancies.coroutinesCore
     implementation dependancies.coroutinesAndroid

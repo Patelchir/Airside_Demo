@@ -3,6 +3,7 @@ package com.example.airside_demo
 import android.app.Dialog
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.os.StrictMode
 import android.widget.SearchView
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
@@ -26,6 +27,14 @@ class MainActivity : ActivityBase<ViewModelBase>() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
+
+        // For Setup Thread Policy
+        StrictMode.setThreadPolicy(
+            StrictMode.ThreadPolicy.Builder().detectDiskReads().detectNetwork().detectDiskWrites()
+                .detectCustomSlowCalls()
+                .penaltyDeath().penaltyLog().build()
+        )
+
         toolbar = binding.layToolbar.toolbar
         txtTitle = binding.layToolbar.toolbarTitle
         searchView = binding.layToolbar.search_view
@@ -38,7 +47,7 @@ class MainActivity : ActivityBase<ViewModelBase>() {
     }
 
     fun displayProgress(t: Boolean) {
-        // binding.loading = t
+        binding.loading = t
         if (t) {
             if (dialog == null)
                 dialog = Utils.progressDialog(this)

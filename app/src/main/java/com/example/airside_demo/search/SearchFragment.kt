@@ -1,12 +1,13 @@
 package com.example.airside_demo.search
 
 import android.annotation.SuppressLint
+import android.os.Bundle
 import android.view.View
 import android.widget.SearchView
+import androidx.core.content.ContextCompat
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.NavDirections
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.airside_demo.MainActivity
@@ -14,10 +15,11 @@ import com.example.airside_demo.R
 import com.example.airside_demo.base.FragmentBase
 import com.example.airside_demo.bind.BindAdapters
 import com.example.airside_demo.bind.GenericRecyclerViewAdapter
-import com.example.airside_demo.databinding.RowHomeBinding
+import com.example.airside_demo.databinding.RowSearchBinding
 import com.example.airside_demo.databinding.SearchFragmentBinding
 import com.example.airside_demo.network.client.ResponseHandler
 import com.example.airside_demo.network.model.ResponseData
+import com.example.airside_demo.utils.Utils
 
 class SearchFragment : FragmentBase<SearchViewModel, SearchFragmentBinding>(),
     SearchView.OnQueryTextListener {
@@ -35,6 +37,9 @@ class SearchFragment : FragmentBase<SearchViewModel, SearchFragmentBinding>(),
     var loadingMore = true
     var isCallApi = false
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+    }
 
     override fun getLayoutId(): Int {
         return R.layout.search_fragment
@@ -47,9 +52,11 @@ class SearchFragment : FragmentBase<SearchViewModel, SearchFragmentBinding>(),
 
 
     override fun initializeScreenVariables() {
+        getDataBinding().txtSearch.text =
+            getString(R.string.tap_on_search_icon_to_image)
         setLiveDataObservers()
         rvAddOnScrollListener()
-        setProjects()
+        setAdapter()
     }
 
     override fun getViewModel(): SearchViewModel? {
@@ -64,6 +71,9 @@ class SearchFragment : FragmentBase<SearchViewModel, SearchFragmentBinding>(),
     override fun onResume() {
         super.onResume()
         getDataBinding().rvList.visibility = View.VISIBLE
+        if (photoList.size == 0) {
+            getDataBinding().txtSearch.visibility = View.VISIBLE
+        }
     }
 
     private fun setLiveDataObservers() {
@@ -90,6 +100,7 @@ class SearchFragment : FragmentBase<SearchViewModel, SearchFragmentBinding>(),
                     totalRecords = it.response?.data?.total!!.toInt()
                     if (currentPage == 1 && it.response.data != null && it.response.data?.photo?.size!! > 0) {
                         photoList.clear()
+                        getDataBinding().rvList.visibility = View.VISIBLE
                         it.response.data?.photo?.let { it1 -> photoList.addAll(it1) }
 
                         getDataBinding().rvList.adapter?.notifyDataSetChanged()
@@ -106,27 +117,31 @@ class SearchFragment : FragmentBase<SearchViewModel, SearchFragmentBinding>(),
                     } else {
                         loadingMore = false
                         viewmodel.showProgressBar(false)
-                        showSnackbar(getString(R.string.no_data_found))
+                        if (currentPage == 1) {
+                            getDataBinding().txtSearch.visibility = View.VISIBLE
+                            getDataBinding().rvList.visibility = View.GONE
+                            showSnackbar(getString(R.string.no_data_found))
+                        }
                     }
                 }
             }
         })
     }
 
-    private fun setProjects() {
+    private fun setAdapter() {
         val myAdapter = object :
-            GenericRecyclerViewAdapter<SearchResponse.Photo, RowHomeBinding>(
+            GenericRecyclerViewAdapter<SearchResponse.Photo, RowSearchBinding>(
                 context!!,
                 photoList
             ) {
             override val layoutResId: Int
-                get() = R.layout.row_home
+                get() = R.layout.row_search
 
             @SuppressLint("SetTextI18n")
             override fun onBindData(
                 model: SearchResponse.Photo,
                 position: Int,
-                dataBinding: RowHomeBinding
+                dataBinding: RowSearchBinding
             ) {
                 dataBinding.executePendingBindings()
                 model.imageurl =
@@ -157,6 +172,8 @@ class SearchFragment : FragmentBase<SearchViewModel, SearchFragmentBinding>(),
     }
 
     private fun rvAddOnScrollListener() {
+        getDataBinding().rvList.setHasFixedSize(true)
+
         getDataBinding().rvList.addOnScrollListener(object :
             RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -168,7 +185,7 @@ class SearchFragment : FragmentBase<SearchViewModel, SearchFragmentBinding>(),
                         (getDataBinding().rvList.layoutManager as LinearLayoutManager).itemCount
                     firstVisibleItem =
                         (getDataBinding().rvList.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
-                    if (visibleItemCount + firstVisibleItem >= totalItemCount - 5 && loadingMore && !isCallApi
+                    if (visibleItemCount + firstVisibleItem >= totalItemCount - 4 && loadingMore && !isCallApi
                         && photoList.size < totalRecords
                     ) {
                         isCallApi = true
@@ -184,6 +201,7 @@ class SearchFragment : FragmentBase<SearchViewModel, SearchFragmentBinding>(),
         (activity as MainActivity).searchView?.clearFocus()
         setPaginationData()
         this.query = query!!
+        getDataBinding().txtSearch.visibility = View.GONE
         photoList.clear()
         getDataBinding().rvList.adapter?.notifyDataSetChanged()
         viewmodel.callSearchAPI(currentPage, query)

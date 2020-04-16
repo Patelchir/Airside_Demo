@@ -6,4 +6,5 @@
     </string>
     <string name="search_hint">Please type here…</string>
     <string name="no_data_found">No Data Found</string>
+    <string name="tap_on_search_icon_to_image">Tap on search to\nSearch your image</string>
 </resources>

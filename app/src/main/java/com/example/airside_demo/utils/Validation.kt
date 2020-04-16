@@ -1,10 +1,5 @@
 package com.example.airside_demo.utils
 
-import android.text.TextUtils
-import android.util.Patterns
-import java.util.regex.Pattern
-
-
 
 object Validation {
 

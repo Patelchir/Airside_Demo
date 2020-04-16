@@ -6,13 +6,13 @@ import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.signature.ObjectKey
 import com.example.airside_demo.R
 import java.io.File
 
 class BindAdapters {
     companion object {
 
-        //        @BindingAdapter(value = ["bind:imageSet", "bind:roundCornerRadius"], requireAll = false)
         @SuppressLint("CheckResult")
         @BindingAdapter("bind:imageSet")
         @JvmStatic
@@ -23,9 +23,8 @@ class BindAdapters {
             } else {
                 val requestOptions = RequestOptions()
                 requestOptions.placeholder(R.drawable.ic_placeholder_image)
-                requestOptions.error(R.drawable.ic_error_image)
-                requestOptions.dontAnimate()
-                requestOptions.diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .error(R.drawable.ic_error_image).dontAnimate()
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
                 if ((url.contains("https://") || url.contains("http://"))) {
                     Glide.with(imageView.context).setDefaultRequestOptions(requestOptions).load(url)
                         .into(imageView)

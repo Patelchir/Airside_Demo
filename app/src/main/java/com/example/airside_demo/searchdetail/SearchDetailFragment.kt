@@ -13,10 +13,6 @@ import com.example.airside_demo.databinding.SearchDetailFragmentBinding
 import com.example.airside_demo.utils.Constant
 import com.example.airside_demo.utils.DebugLog
 
-
-/**
- * A simple [Fragment] subclass.
- */
 class SearchDetailFragment : FragmentBase<SearchDetailViewModel, SearchDetailFragmentBinding>() {
 
     private lateinit var viewmodel: SearchDetailViewModel

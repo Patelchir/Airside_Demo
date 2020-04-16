@@ -6,12 +6,12 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="7dp">
+        android:layout_margin="@dimen/_7sdp">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/imgPhoto"
             android:layout_width="match_parent"
-            android:layout_height="250dp"
+            android:layout_height="@dimen/_250sdp"
             android:adjustViewBounds="true"
             android:scaleType="center"
             app:layout_constraintStart_toStartOf="parent"
